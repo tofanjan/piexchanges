@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Network Exchange | Professional Crypto Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #16c784;
+            --primary-dark: #10a56d;
+            --secondary: #3861fb;
+            --danger: #ea3943;
+            --warning: #f0b90b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --bg-dark: #0f172a;
+            --bg-darker: #020617;
+            --bg-card: #1e293b;
+            --border-color: #334155;
+            --chart-up: #16c784;
+            --chart-down: #ea3943;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header/Navbar */
+        .navbar {
+            background-color: var(--bg-dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--warning);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--warning), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--bg-dark);
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .menu-item.active {
+            background-color: rgba(22, 199, 132, 0.1);
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 1.5rem;
+        }
+
+        /* Market Overview */
+        .market-overview {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: var(--secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .market-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .market-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .market-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .coin-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .coin-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .pi-icon {
+            background-color: #f0b90b;
+            color: #000;
+        }
+
+        .btc-icon {
+            background-color: #f7931a;
+            color: #fff;
+        }
+
+        .eth-icon {
+            background-color: #627eea;
+            color: #fff;
+        }
+
+        .coin-name {
+            font-weight: 600;
+        }
+
+        .coin-symbol {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .current-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .price-change {
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .positive {
+            background-color: rgba(22, 199, 132, 0.2);
+            color: var(--chart-up);
+        }
+
+        .negative {
+            background-color: rgba(234, 57, 67, 0.2);
+            color: var(--chart-down);
+        }
+
+        /* Trading View */
+        .trading-view {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-coin {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .chart-price {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .chart-change {
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .chart-timeframes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .timeframe-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .timeframe-btn.active {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .timeframe-btn:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            height: 400px;
+            background-color: var(--bg-dark);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--warning);
+        }
+
+        /* Order Form */
+        .order-form {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .form-tab.active {
+            color: var(--primary);
+        }
+
+        .form-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(22, 199, 132, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .input-group input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+        }
+
+        .input-group select {
+            border: none;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-left: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .form-actions {
+            margin-top: 2rem;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .btn-buy {
+            background-color: var(--primary);
+            color: #000;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-sell {
+            background-color: var(--danger);
+            color: #fff;
+        }
+
+        .balance-info {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Order Book */
+        .order-book {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .order-book-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .order-book-title {
+            font-weight: 600;
+        }
+
+        .order-book-depth {
+            display: flex;
+            gap: 8px;
+        }
+
+        .depth-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .depth-btn.active {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .order-book-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .order-book-table th {
+            text-align: left;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .order-book-table td {
+            padding: 0.25rem 0;
+            font-family: 'Inter', monospace;
+        }
+
+        .bid-row {
+            color: var(--chart-up);
+        }
+
+        .ask-row {
+            color: var(--chart-down);
+        }
+
+        /* Recent Trades */
+        .recent-trades {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .trades-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .trades-table th {
+            text-align: left;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .trades-table td {
+            padding: 0.25rem 0;
+            font-family: 'Inter', monospace;
+        }
+
+        .trade-buy {
+            color: var(--chart-up);
+        }
+
+        .trade-sell {
+            color: var(--chart-down);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .market-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Exchange Specific Styles */
+        .exchange-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .exchange-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .exchange-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--warning), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .exchange-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .price-ticker {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(22, 199, 132, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(22, 199, 132, 0.3);
+            animation: pulse 3s infinite;
+        }
+
+        .price-change-indicator {
+            margin-left: 8px;
+            font-size: 0.9em;
+        }
+
+        .up {
+            color: var(--chart-up);
+        }
+
+        .down {
+            color: var(--chart-down);
+        }
+
+        .exchange-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .exchange-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .exchange-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .exchange-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--warning);
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--warning);
+        }
+
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .amount-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .amount-container .form-control {
+            flex: 1;
+        }
+
+        .amount-container select {
+            width: 150px;
+        }
+
+        .info-box {
+            background-color: rgba(22, 199, 132, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-box i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .payment-method {
+            background-color: rgba(56, 97, 251, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(56, 97, 251, 0.3);
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .address-container {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .address-input {
+            padding-right: 100px;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background-color: #2a4fd8;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .wallet-options {
+            margin-top: 1.5rem;
+        }
+
+        .wallet-option {
+            display: none;
+        }
+
+        .wallet-option.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .wallet-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .wallet-icon {
+            font-size: 1.5rem;
+            width: 30px;
+            text-align: center;
+        }
+
+        .file-upload {
+            margin-top: 1.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(22, 199, 132, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .upload-subtext {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-container {
+            height: 8px;
+            background-color: var(--bg-dark);
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--warning), var(--primary));
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .success-message {
+            background-color: rgba(22, 199, 132, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            display: none;
+            margin: 1.5rem 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .success-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .exchange-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .exchange-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .exchange-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--warning);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-coins logo-icon"></i>
+            <span class="logo-text">Pi Exchange Pro</span>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="#" class="nav-link active"><i class="fas fa-exchange-alt"></i> Exchange</a>
+            <a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Markets</a>
+            <a href="#" class="nav-link"><i class="fas fa-wallet"></i> Wallet</a>
+            <a href="#" class="nav-link"><i class="fas fa-history"></i> History</a>
+        </div>
+        
+        <div class="nav-actions">
+            <button class="btn btn-outline"><i class="fas fa-bell"></i></button>
+            <button class="theme-toggle"><i class="fas fa-moon"></i></button>
+            <div class="user-profile">
+                <div class="avatar">JP</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="exchange-container">
+        <header class="exchange-header">
+            <div class="logo">
+                <i class="fas fa-coins logo-icon"></i>
+                <h1 class="exchange-title">Pi Network Exchange</h1>
+            </div>
+            <p class="exchange-subtitle">Trade Pi coins with deep liquidity and low fees. Our institutional-grade exchange offers professional trading tools and security.</p>
+            <div class="price-ticker">
+                Pi Network (PI) <span id="current-price">$0.6014</span>
+                <span class="price-change-indicator up" id="price-change-indicator"><i class="fas fa-caret-up"></i> 2.34%</span>
+            </div>
+        </header>
+
+        <!-- Exchange Stats -->
+        <div class="exchange-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-value">250K+</div>
+                <div class="stat-label">Active Traders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="stat-value">$15M+</div>
+                <div class="stat-label">Daily Volume</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Trading Pairs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Secure</div>
+            </div>
+        </div>
+
+        <!-- Exchange Grid -->
+        <div class="exchange-grid">
+            <!-- Trading View -->
+            <div class="exchange-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line card-icon"></i>
+                    <h2 class="card-title">Pi Trading Chart</h2>
+                </div>
+                
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <div class="chart-coin">PI/USDT</div>
+                        <div class="chart-price">$0.60314</div>
+                        <div class="chart-change up">+2.34%</div>
+                    </div>
+                    <div class="chart-timeframes">
+                        <button class="timeframe-btn">1h</button>
+                        <button class="timeframe-btn">4h</button>
+                        <button class="timeframe-btn active">1d</button>
+                        <button class="timeframe-btn">1w</button>
+                        <button class="timeframe-btn">1m</button>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Live Trading Chart</p>
+                        <p>Real-time price data with advanced technical indicators</p>
+                    </div>
+                </div>
+                
+                <div class="market-overview">
+                    <div class="section-header">
+                        <div class="section-title">Pi Market Overview</div>
+                        <a href="#" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    
+                    <div class="market-cards">
+                        <div class="market-card">
+                            <div class="coin-info">
+                                <div class="coin-icon pi-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div>
+                                    <div class="coin-name">Pi Network</div>
+                                    <div class="coin-symbol">PI</div>
+                                </div>
+                            </div>
+                            <div class="price-info">
+                                <div class="current-price">$0.60314</div>
+                                <div class="price-change up">+2.34%</div>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="coin-info">
+                                <div class="coin-icon btc-icon">
+                                    <i class="fab fa-bitcoin"></i>
+                                </div>
+                                <div>
+                                    <div class="coin-name">Bitcoin</div>
+                                    <div class="coin-symbol">BTC</div>
+                                </div>
+                            </div>
+                            <div class="price-info">
+                                <div class="current-price">$106,856.12</div>
+                                <div class="price-change up">+1.12%</div>
+                            </div>
+                        </div>
+                        <div class="market-card">
+                            <div class="coin-info">
+                                <div class="coin-icon eth-icon">
+                                    <i class="fab fa-ethereum"></i>
+                                </div>
+                                <div>
+                                    <div class="coin-name">Ethereum</div>
+                                    <div class="coin-symbol">ETH</div>
+                                </div>
+                            </div>
+                            <div class="price-info">
+                                <div class="current-price">$2,445.67</div>
+                                <div class="price-change down">-0.45%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Form -->
+            <div class="exchange-card">
+                <div class="card-header">
+                    <i class="fas fa-exchange-alt card-icon"></i>
+                    <h2 class="card-title">Exchange Pi Coins</h2>
+                </div>
+                
+                <div class="form-tabs">
+                    <div class="form-tab active">Buy</div>
+                    <div class="form-tab">Sell</div>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label"><i class="fas fa-coins"></i> Amount to Exchange</label>
+                    <div class="amount-container">
+                        <input type="number" class="form-control" id="amount" placeholder="Enter Pi amount" min="1" value="10">
+                        <select class="form-control">
+                            <option value="pi">PI</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label"><i class="fas fa-money-bill-wave"></i> Receive Currency</label>
+                    <select class="form-control" id="currency">
+                        <option value="usdt">USDT (Tether)</option>
+                        <option value="btc">Bitcoin (BTC)</option>
+                        <option value="eth">Ethereum (ETH)</option>
+                        <option value="usd">USD (Bank Transfer)</option>
+                        <option value="eur">EUR (Bank Transfer)</option>
+                        <option value="gbp">GBP (Bank Transfer)</option>
+                    </select>
+                </div>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-info-circle"></i> Current exchange rate: 1 PI = $0.060314</p>
+                    <p><i class="fas fa-clock"></i> Estimated processing time: 1-3 minutes</p>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
+                
+                <div class="payment-method">
+                    <i class="fab fa-google-pay payment-icon"></i>
+                    <h3 class="payment-title">Pi Network Payment</h3>
+                    <p>Send your Pi coins to the following address:</p>
+                    
+                    <div class="form-row" style="margin-top: 1rem;">
+                        <div class="address-container">
+                            <input type="text" class="form-control address-input" id="pi-address" value="MD5HGPHVL73EBDUD2Z4K2VDRLUBC4FFN7GOBLKPK6OPPXH6TED4TQAAAAGK2PHNAEUZH6" readonly>
+                            <button class="copy-btn" id="copy-pi-btn"><i class="fas fa-copy"></i> Copy</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="wallet-options">
+                    <div class="wallet-option active" id="usdt-wallet-option">
+                        <label class="wallet-label"><i class="fab fa-ethereum wallet-icon"></i> USDT (TRC20) Wallet Address</label>
+                        <input type="text" class="form-control" id="usdt-wallet" placeholder="Enter your USDT wallet address">
+                    </div>
+                    
+                    <div class="wallet-option" id="btc-wallet-option">
+                        <label class="wallet-label"><i class="fab fa-bitcoin wallet-icon"></i> Bitcoin Wallet Address</label>
+                        <input type="text" class="form-control" id="btc-wallet" placeholder="Enter your Bitcoin wallet address">
+                    </div>
+                    
+                    <div class="wallet-option" id="eth-wallet-option">
+                        <label class="wallet-label"><i class="fab fa-ethereum wallet-icon"></i> Ethereum Wallet Address</label>
+                        <input type="text" class="form-control" id="eth-wallet" placeholder="Enter your Ethereum wallet address">
+                    </div>
+                    
+                    <div class="wallet-option" id="bank-wallet-option">
+                        <label class="wallet-label"><i class="fas fa-university wallet-icon"></i> Bank Account Details</label>
+                        <input type="text" class="form-control" placeholder="Account Holder Name" style="margin-bottom: 0.75rem;">
+                        <input type="text" class="form-control" placeholder="IBAN/Account Number">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label"><i class="fas fa-camera"></i> Transaction Proof (Screenshot)</label>
+                    <div class="file-upload">
+                        <div class="upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <div class="upload-text">Click or drag to upload screenshot</div>
+                            <div class="upload-subtext">PNG, JPG, or GIF (Max 5MB)</div>
+                            <input type="file" id="file-input" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <button class="btn btn-primary btn-block" id="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Complete Exchange
+                </button>
+                
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h3 class="success-title">Exchange Successful!</h3>
+                    <p>Your Pi coins have been successfully exchanged.</p>
+                    <p>Funds will be transferred to your account within 1 hours.</p>
+                    <p>A confirmation email has been sent to your inbox.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Order Book and Recent Trades -->
+        <div class="exchange-grid">
+            <div class="exchange-card">
+                <div class="card-header">
+                    <i class="fas fa-book card-icon"></i>
+                    <h2 class="card-title">Order Book</h2>
+                </div>
+                
+                <div class="order-book">
+                    <div class="order-book-header">
+                        <div class="order-book-title">PI/USDT</div>
+                        <div class="order-book-depth">
+                            <button class="depth-btn">0.1%</button>
+                            <button class="depth-btn active">0.5%</button>
+                            <button class="depth-btn">1%</button>
+                        </div>
+                    </div>
+                    
+                    <table class="order-book-table">
+                        <thead>
+                            <tr>
+                                <th>Price (USDT)</th>
+                                <th>Amount (PI)</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="ask-row">
+                                <td>0.60318</td>
+                                <td>125.42</td>
+                                <td>79.24</td>
+                            </tr>
+                            <tr class="ask-row">
+                                <td>0.60317</td>
+                                <td>89.15</td>
+                                <td>56.32</td>
+                            </tr>
+                            <tr class="ask-row">
+                                <td>0.601316</td>
+                                <td>42.78</td>
+                                <td>27.02</td>
+                            </tr>
+                            <tr class="ask-row">
+                                <td>0.601315</td>
+                                <td>210.93</td>
+                                <td>133.20</td>
+                            </tr>
+                            <tr class="ask-row">
+                                <td>0.601314</td>
+                                <td>78.56</td>
+                                <td>49.61</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 0.5rem; color: var(--warning); font-weight: 600;">$0.60314</td>
+                            </tr>
+                            <tr class="bid-row">
+                                <td>0.601313</td>
+                                <td>156.24</td>
+                                <td>98.66</td>
+                            </tr>
+                            <tr class="bid-row">
+                                <td>0.601312</td>
+                                <td>92.47</td>
+                                <td>58.39</td>
+                            </tr>
+                            <tr class="bid-row">
+                                <td>0.601311</td>
+                                <td>203.85</td>
+                                <td>128.71</td>
+                            </tr>
+                            <tr class="bid-row">
+                                <td>0.601310</td>
+                                <td>67.93</td>
+                                <td>42.89</td>
+                            </tr>
+                            <tr class="bid-row">
+                                <td>0.601309</td>
+                                <td>178.42</td>
+                                <td>112.67</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="exchange-card">
+                <div class="card-header">
+                    <i class="fas fa-history card-icon"></i>
+                    <h2 class="card-title">Recent Trades</h2>
+                </div>
+                
+                <div class="recent-trades">
+                    <table class="trades-table">
+                        <thead>
+                            <tr>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="trade-buy">0.61314</td>
+                                <td>12.45</td>
+                                <td>12:45:23</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-sell">0.61313</td>
+                                <td>8.92</td>
+                                <td>12:44:57</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-buy">0.61314</td>
+                                <td>25.78</td>
+                                <td>12:44:32</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-buy">0.61314</td>
+                                <td>5.63</td>
+                                <td>12:44:15</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-sell">0.61313</td>
+                                <td>18.24</td>
+                                <td>12:43:48</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-buy">0.6314</td>
+                                <td>7.56</td>
+                                <td>12:43:22</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-sell">0.61313</td>
+                                <td>32.89</td>
+                                <td>12:42:57</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-buy">0.61314</td>
+                                <td>14.23</td>
+                                <td>12:42:31</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-sell">0.61313</td>
+                                <td>9.75</td>
+                                <td>12:42:05</td>
+                            </tr>
+                            <tr>
+                                <td class="trade-buy">0.61314</td>
+                                <td>21.46</td>
+                                <td>12:41:38</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#" class="footer-link">About Us</a>
+            <a href="#" class="footer-link">Fees</a>
+            <a href="#" class="footer-link">API</a>
+            <a href="#" class="footer-link">Support</a>
+            <a href="#" class="footer-link">Terms</a>
+            <a href="#" class="footer-link">Privacy</a>
+        </div>
+        <p class="copyright">© 2025 Pi Exchange Pro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial Pi price
+            let piPrice = 0.60314;
+            let previousPrice = piPrice;
+            
+            // Update price display
+            function updatePriceDisplay() {
+                document.getElementById('current-price').textContent = `$${piPrice.toFixed(4)}`;
+                
+                // Calculate percentage change
+                const changePercent = ((piPrice - previousPrice) / previousPrice * 100).toFixed(2);
+                const indicator = document.getElementById('price-change-indicator');
+                
+                if (piPrice > previousPrice) {
+                    indicator.className = 'price-change-indicator up';
+                    indicator.innerHTML = `<i class="fas fa-caret-up"></i> ${Math.abs(changePercent)}%`;
+                } else if (piPrice < previousPrice) {
+                    indicator.className = 'price-change-indicator down';
+                    indicator.innerHTML = `<i class="fas fa-caret-down"></i> ${Math.abs(changePercent)}%`;
+                }
+                
+                // Update chart price
+                document.querySelector('.chart-price').textContent = `$${piPrice.toFixed(4)}`;
+                
+                previousPrice = piPrice;
+            }
+            
+            // Initialize price display
+            updatePriceDisplay();
+            
+            // Simulate price changes
+            function simulatePriceChange() {
+                const changeAmount = (Math.random() * 0.03) - 0.015;
+                const newPrice = piPrice + changeAmount;
+                
+                // Keep price within reasonable bounds
+                piPrice = Math.max(0.6, Math.min(0.8, newPrice));
+                
+                updatePriceDisplay();
+                
+                // Schedule next change
+                const nextChange = 3000 + Math.random() * 7000;
+                setTimeout(simulatePriceChange, nextChange);
+            }
+            
+            // Start price simulation
+            setTimeout(simulatePriceChange, 3000);
+            
+            // Copy Pi address functionality
+            const copyPiBtn = document.getElementById('copy-pi-btn');
+            const piAddress = document.getElementById('pi-address');
+            
+            copyPiBtn.addEventListener('click', function() {
+                piAddress.select();
+                document.execCommand('copy');
+                
+                // Visual feedback
+                const originalText = copyPiBtn.innerHTML;
+                copyPiBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyPiBtn.style.backgroundColor = '#16c784';
+                
+                setTimeout(() => {
+                    copyPiBtn.innerHTML = originalText;
+                    copyPiBtn.style.backgroundColor = '#3861fb';
+                }, 2000);
+            });
+            
+            // File upload functionality
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('file-input');
+            
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    uploadArea.innerHTML = `
+                        <i class="fas fa-file-image upload-icon"></i>
+                        <div class="upload-text">${fileName}</div>
+                        <div class="upload-subtext">Click to change file</div>
+                    `;
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#16c784';
+                uploadArea.style.backgroundColor = 'rgba(22, 199, 132, 0.1)';
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = 'var(--border-color)';
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--border-color)';
+                uploadArea.style.backgroundColor = 'transparent';
+                
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    fileInput.files = e.dataTransfer.files;
+                    const fileName = e.dataTransfer.files[0].name;
+                    uploadArea.innerHTML = `
+                        <i class="fas fa-file-image upload-icon"></i>
+                        <div class="upload-text">${fileName}</div>
+                        <div class="upload-subtext">Click to change file</div>
+                    `;
+                }
+            });
+            
+            // Currency selector change
+            const currencySelect = document.getElementById('currency');
+            const walletOptions = document.querySelectorAll('.wallet-option');
+            
+            currencySelect.addEventListener('change', function() {
+                // Hide all wallet options
+                walletOptions.forEach(option => {
+                    option.classList.remove('active');
+                });
+                
+                // Show the selected wallet option
+                const selectedOption = this.value;
+                if (selectedOption === 'btc') {
+                    document.getElementById('btc-wallet-option').classList.add('active');
+                } else if (selectedOption === 'eth') {
+                    document.getElementById('eth-wallet-option').classList.add('active');
+                } else if (selectedOption === 'usdt') {
+                    document.getElementById('usdt-wallet-option').classList.add('active');
+                } else {
+                    document.getElementById('bank-wallet-option').classList.add('active');
+                }
+            });
+            
+            // Form submission
+            const submitBtn = document.getElementById('submit-btn');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const successMessage = document.getElementById('success-message');
+            
+            submitBtn.addEventListener('click', function() {
+                const amount = document.getElementById('amount').value;
+                const email = document.getElementById('email').value;
+                const file = fileInput.files[0];
+                const selectedCurrency = document.getElementById('currency').value;
+                
+                // Simple validation
+                if (!amount || amount < 1) {
+                    alert('Please enter a valid Pi amount');
+                    return;
+                }
+                
+                if (!email || !email.includes('@')) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                
+                if (!file) {
+                    alert('Please upload a screenshot of your transaction');
+                    return;
+                }
+                
+                // Show progress bar
+                progressContainer.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                // Simulate processing
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        // Show success message
+                        setTimeout(() => {
+                            successMessage.style.display = 'block';
+                            progressContainer.style.display = 'none';
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Complete Exchange';
+                            
+                            // Scroll to success message
+                            successMessage.scrollIntoView({ behavior: 'smooth' });
+                        }, 300);
+                    }
+                }, 50);
+            });
+            
+            // Timeframe buttons
+            const timeframeBtns = document.querySelectorAll('.timeframe-btn');
+            timeframeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    timeframeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Form tabs
+            const formTabs = document.querySelectorAll('.form-tab');
+            formTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    formTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Depth buttons
+            const depthBtns = document.querySelectorAll('.depth-btn');
+            depthBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    depthBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
